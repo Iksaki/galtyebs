@@ -535,22 +535,23 @@
   }
 
   .teacher-card {
-    background: var(--white);
-    border-radius: 6px;
+    background: linear-gradient(160deg, #1a2f5e 0%, #0d1b3e 100%);
+    border-radius: 12px;
     overflow: hidden;
+    border: 2px solid var(--gold);
     transition: transform 0.25s, box-shadow 0.25s;
     cursor: pointer;
   }
 
   .teacher-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 50px rgba(13,27,62,0.12);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(13,27,62,0.35), 0 0 30px rgba(201,168,76,0.2);
   }
 
   .teacher-photo {
     aspect-ratio: 1 / 1;
     width: 100%;
-    background: var(--navy-light);
+    background: linear-gradient(160deg, #1a2f5e 0%, #0d1b3e 100%);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -561,13 +562,15 @@
   .teacher-avatar {
     width: 90px; height: 90px;
     border-radius: 50%;
-    background: rgba(201,168,76,0.15);
-    border: 2px solid rgba(201,168,76,0.3);
+    background: linear-gradient(135deg, rgba(201,168,76,0.3), rgba(201,168,76,0.1));
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 20px rgba(201,168,76,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
+    font-weight: 900;
     color: var(--gold);
     position: relative;
     z-index: 1;
@@ -577,31 +580,33 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px);
     background-size: 20px 20px;
   }
 
-  .teacher-info { padding: 1.2rem; }
+  .teacher-info { padding: 1.2rem; text-align: center; }
 
   .teacher-info h4 {
     font-family: 'Playfair Display', serif;
     font-size: 1rem;
     font-weight: 700;
-    color: var(--text-dark);
+    color: #fff;
     margin-bottom: 4px;
   }
 
   .teacher-subject {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     color: var(--gold);
-    font-weight: 600;
-    letter-spacing: 0.04em;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
   }
 
   .teacher-exp {
     font-size: 0.75rem;
-    color: var(--text-light);
+    color: rgba(255,255,255,0.45);
     margin-top: 4px;
   }
 
@@ -1141,23 +1146,28 @@
 }
 /* Director special card */
 .director-card-special {
-  background: var(--navy);
+  background: linear-gradient(160deg, #1a2f5e 0%, #0d1b3e 100%);
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.25s, box-shadow 0.25s;
   border: 2px solid var(--gold);
   position: relative;
+  box-shadow: 0 0 0 0 rgba(201,168,76,0);
 }
-.director-card-special:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(13,27,62,0.25); }
+.director-card-special:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(13,27,62,0.3), 0 0 30px rgba(201,168,76,0.2);
+}
 .director-card-special .teacher-photo {
   aspect-ratio: 3/4;
   background: #0d1b3e;
 }
 .director-card-special .teacher-avatar {
   width: 140px; height: 140px; font-size: 3.8rem;
-  background: rgba(201,168,76,0.2);
-  border: 2px solid var(--gold);
+  background: linear-gradient(135deg, rgba(201,168,76,0.3), rgba(201,168,76,0.1));
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 20px rgba(201,168,76,0.3);
 }
 .director-card-special .dir-info {
   padding: 1.5rem;
@@ -1262,7 +1272,7 @@ function closeLightbox() {
         <div class="director-card-special" onclick="openCard('Ц','Захирал','А. Цэрэнхүү')">
           <div class="teacher-photo" style="aspect-ratio:3/4;">
             <div class="teacher-bg-pattern"></div>
-            <div class="teacher-avatar" style="width:140px;height:140px;font-size:3.8rem;">Ц</div>
+            <div class="teacher-avatar" style="width:150px;height:150px;font-size:4rem;box-shadow:0 0 30px rgba(201,168,76,0.4);">Ц</div>
           </div>
           <div class="dir-info">
             <div class="dir-badge">Захирал</div>
@@ -1290,6 +1300,20 @@ function closeLightbox() {
 
     <!-- Багш нар бүлгээр -->
     
+      <div class="team-group">
+        <div class="team-group-label">Сэтгэл зүйч</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Б','Сэтгэл зүйч','Д. Буянхишиг')">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
+              <div class="teacher-info">
+                <h4>Д. Буянхишиг</h4>
+                <div class="teacher-subject">Сэтгэл зүйч</div>
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+          </div>
+        </div>
+      </div>
+
       <div class="team-group">
         <div class="team-group-label">Монгол хэл & Уран зохиол</div>
         <div class="teachers-grid" style="margin-top:1rem;">
