@@ -1127,16 +1127,86 @@
   border-bottom: 2px solid var(--gold);
   display: inline-block;
 }
+/* Admin grid */
 .team-admin-grid {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 1.5rem;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
   align-items: start;
 }
 .admin-staff-col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+}
+/* Director special card */
+.director-card-special {
+  background: var(--navy);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+  border: 2px solid var(--gold);
+  position: relative;
+}
+.director-card-special:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(13,27,62,0.25); }
+.director-card-special .teacher-photo {
+  aspect-ratio: 3/4;
+  background: #0d1b3e;
+}
+.director-card-special .teacher-avatar {
+  width: 140px; height: 140px; font-size: 3.8rem;
+  background: rgba(201,168,76,0.2);
+  border: 2px solid var(--gold);
+}
+.director-card-special .dir-info {
+  padding: 1.5rem;
+  text-align: center;
+  background: var(--navy);
+}
+.director-card-special .dir-badge {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 6px;
+}
+.director-card-special .dir-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 700; color: #fff;
+}
+/* Lightbox */
+.card-lightbox {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+  z-index: 2000; align-items: center; justify-content: center;
+}
+.card-lightbox.open { display: flex; }
+.lightbox-inner {
+  background: var(--white); border-radius: 16px;
+  padding: 2.5rem; max-width: 340px; width: 90%;
+  text-align: center; position: relative;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  animation: lbIn 0.25s ease;
+}
+@keyframes lbIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.lightbox-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none; font-size: 1.5rem;
+  cursor: pointer; color: #aaa; line-height: 1;
+}
+.lightbox-avatar {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: var(--navy); display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700;
+  color: var(--gold); margin: 0 auto 1.2rem;
+  border: 3px solid var(--gold);
+}
+.lightbox-badge {
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
+}
+.lightbox-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 700; color: var(--navy);
 }
 @media(max-width:700px) {
   .team-admin-grid { grid-template-columns: 1fr; }
@@ -1146,6 +1216,28 @@
   .admin-staff-col { grid-template-columns: 1fr 1fr; }
 }
 </style>
+
+<!-- CARD LIGHTBOX -->
+<div class="card-lightbox" id="cardLightbox" onclick="if(event.target===this)closeLightbox()">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <div class="lightbox-avatar" id="lbAvatar"></div>
+    <div class="lightbox-badge" id="lbBadge"></div>
+    <div class="lightbox-name" id="lbName"></div>
+  </div>
+</div>
+
+<script>
+function openCard(letter, badge, name) {
+  document.getElementById('lbAvatar').textContent = letter;
+  document.getElementById('lbBadge').textContent = badge;
+  document.getElementById('lbName').textContent = name;
+  document.getElementById('cardLightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('cardLightbox').classList.remove('open');
+}
+</script>
 <section id="bagsh">
   <div class="container">
     <div class="teachers-intro">
@@ -1166,28 +1258,28 @@
       <div class="team-group-label">Сургуулийн захиргаа</div>
       <div style="margin-top:1.5rem;">
         <div class="team-admin-grid">
-        <!-- Захирал - том босоо карт -->
-        <div class="teacher-card admin-director">
+        <!-- Захирал - онцгой том карт -->
+        <div class="director-card-special" onclick="openCard('Ц','Захирал','А. Цэрэнхүү')">
           <div class="teacher-photo" style="aspect-ratio:3/4;">
             <div class="teacher-bg-pattern"></div>
-            <div class="teacher-avatar" style="width:120px;height:120px;font-size:3.2rem;">Ц</div>
+            <div class="teacher-avatar" style="width:140px;height:140px;font-size:3.8rem;">Ц</div>
           </div>
-          <div class="teacher-info" style="text-align:center;">
-            <div class="teacher-subject">Захирал</div>
-            <h4 style="font-size:1.3rem;">А. Цэрэнхүү</h4>
+          <div class="dir-info">
+            <div class="dir-badge">Захирал</div>
+            <div class="dir-name">А. Цэрэнхүү</div>
           </div>
         </div>
         <!-- Бусад 3 карт -->
         <div class="admin-staff-col">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Ч','Менежер','С. Чулуунбаатар')">
             <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ч</div></div>
             <div class="teacher-info"><div class="teacher-subject">Менежер</div><h4>С. Чулуунбаатар</h4></div>
           </div>
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Б','Менежер','Д. Бямбасүрэн')">
             <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
             <div class="teacher-info"><div class="teacher-subject">Менежер</div><h4>Д. Бямбасүрэн</h4></div>
           </div>
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Д','Нийгмийн ажилтан','Э. Дашдулам')">
             <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Д</div></div>
             <div class="teacher-info"><div class="teacher-subject">Нийгмийн ажилтан</div><h4>Э. Дашдулам</h4></div>
           </div>
@@ -1201,42 +1293,42 @@
       <div class="team-group">
         <div class="team-group-label">Монгол хэл & Уран зохиол</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Н','','Б. Наранцэцэг')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
               <div class="teacher-info">
                 <h4>Б. Наранцэцэг</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Ж','','Х. Жавзансүрэн')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ж</div></div>
               <div class="teacher-info">
                 <h4>Х. Жавзансүрэн</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Г','','Л. Гүрмаа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Г</div></div>
               <div class="teacher-info">
                 <h4>Л. Гүрмаа</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Ц','','А. Циенцогзол')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ц</div></div>
               <div class="teacher-info">
                 <h4>А. Циенцогзол</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Н','','Н. Насантогтох')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
               <div class="teacher-info">
                 <h4>Н. Насантогтох</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Н','','Ж. Нансалмаа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
               <div class="teacher-info">
                 <h4>Ж. Нансалмаа</h4>
@@ -1249,35 +1341,35 @@
       <div class="team-group">
         <div class="team-group-label">Математик</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Э','','М. Эрдэнэцэг')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Э</div></div>
               <div class="teacher-info">
                 <h4>М. Эрдэнэцэг</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Э','','Г. Эрдэнэтуяа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Э</div></div>
               <div class="teacher-info">
                 <h4>Г. Эрдэнэтуяа</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Ж','','С. Жавзандулам')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ж</div></div>
               <div class="teacher-info">
                 <h4>С. Жавзандулам</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Ч','','С. Чулуунбаатар')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ч</div></div>
               <div class="teacher-info">
                 <h4>С. Чулуунбаатар</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Х','','П. Хишигбаяр')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Х</div></div>
               <div class="teacher-info">
                 <h4>П. Хишигбаяр</h4>
@@ -1290,14 +1382,14 @@
       <div class="team-group">
         <div class="team-group-label">Физик</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('С','','П. Сарангэрэл')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">С</div></div>
               <div class="teacher-info">
                 <h4>П. Сарангэрэл</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Н','','Ч. Нарантуяа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
               <div class="teacher-info">
                 <h4>Ч. Нарантуяа</h4>
@@ -1310,28 +1402,28 @@
       <div class="team-group">
         <div class="team-group-label">Англи хэл</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Д','','Б. Дэчмаа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Д</div></div>
               <div class="teacher-info">
                 <h4>Б. Дэчмаа</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Б','','Ю. Буянзаяа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
               <div class="teacher-info">
                 <h4>Ю. Буянзаяа</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Б','','Д. Булгантамир')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
               <div class="teacher-info">
                 <h4>Д. Булгантамир</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('С','','Ч. Содномпил')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">С</div></div>
               <div class="teacher-info">
                 <h4>Ч. Содномпил</h4>
@@ -1344,14 +1436,14 @@
       <div class="team-group">
         <div class="team-group-label">Биологи</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('А','','С. Адъяа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">А</div></div>
               <div class="teacher-info">
                 <h4>С. Адъяа</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Б','','Б. Баасанням')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
               <div class="teacher-info">
                 <h4>Б. Баасанням</h4>
@@ -1364,35 +1456,35 @@
       <div class="team-group">
         <div class="team-group-label">Нийгмийн ухаан & Түүх</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Д','','Э. Даваа-Очир')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Д</div></div>
               <div class="teacher-info">
                 <h4>Э. Даваа-Очир</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('А','','С. Алтантуяа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">А</div></div>
               <div class="teacher-info">
                 <h4>С. Алтантуяа</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('О','','Г. Оюунзаяа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">О</div></div>
               <div class="teacher-info">
                 <h4>Г. Оюунзаяа</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Г','','Ч. Гэрэлтуяа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Г</div></div>
               <div class="teacher-info">
                 <h4>Ч. Гэрэлтуяа</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Ц','','У. Цэрэнням')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ц</div></div>
               <div class="teacher-info">
                 <h4>У. Цэрэнням</h4>
@@ -1405,7 +1497,7 @@
       <div class="team-group">
         <div class="team-group-label">Газарзүй</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('А','','П. Амаржаргал')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">А</div></div>
               <div class="teacher-info">
                 <h4>П. Амаржаргал</h4>
@@ -1418,7 +1510,7 @@
       <div class="team-group">
         <div class="team-group-label">Мэдээлэл зүй</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Б','','Х. Баасанбаяр')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
               <div class="teacher-info">
                 <h4>Х. Баасанбаяр</h4>
@@ -1431,14 +1523,14 @@
       <div class="team-group">
         <div class="team-group-label">Хими</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('А','','Г. Ариунжаргал')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">А</div></div>
               <div class="teacher-info">
                 <h4>Г. Ариунжаргал</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Т','','Х. Түмэндэмбэрэл')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Т</div></div>
               <div class="teacher-info">
                 <h4>Х. Түмэндэмбэрэл</h4>
@@ -1451,7 +1543,7 @@
       <div class="team-group">
         <div class="team-group-label">Орос хэл</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('М','','Л. Мөнхцэцэг')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">М</div></div>
               <div class="teacher-info">
                 <h4>Л. Мөнхцэцэг</h4>
@@ -1464,7 +1556,7 @@
       <div class="team-group">
         <div class="team-group-label">Эрүүл мэнд</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Х','','Н. Халтар')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Х</div></div>
               <div class="teacher-info">
                 <h4>Н. Халтар</h4>
@@ -1477,28 +1569,28 @@
       <div class="team-group">
         <div class="team-group-label">Дүрслэх урлаг & Технологи</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Б','','Г. Батхишиг')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
               <div class="teacher-info">
                 <h4>Г. Батхишиг</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Н','','М. Нэргүй')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
               <div class="teacher-info">
                 <h4>М. Нэргүй</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Н','','П. Намдагсүрэн')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
               <div class="teacher-info">
                 <h4>П. Намдагсүрэн</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Ц','','Б. Цэрэнчимэд')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ц</div></div>
               <div class="teacher-info">
                 <h4>Б. Цэрэнчимэд</h4>
@@ -1511,28 +1603,28 @@
       <div class="team-group">
         <div class="team-group-label">Биеийн тамир</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Б','','Б. Баярсүрэн')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
               <div class="teacher-info">
                 <h4>Б. Баярсүрэн</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('М','','В. Мягмарсүрэн')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">М</div></div>
               <div class="teacher-info">
                 <h4>В. Мягмарсүрэн</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Р','','Ц. Рааш')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Р</div></div>
               <div class="teacher-info">
                 <h4>Ц. Рааш</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('Б','','Д. Баярмаа')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
               <div class="teacher-info">
                 <h4>Д. Баярмаа</h4>
@@ -1545,14 +1637,14 @@
       <div class="team-group">
         <div class="team-group-label">Дуу, хөгжим</div>
         <div class="teachers-grid" style="margin-top:1rem;">
-          <div class="teacher-card">
+          <div class="teacher-card" style="cursor:pointer;" onclick="openCard('Э','','С. Энх-Од')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Э</div></div>
               <div class="teacher-info">
                 <h4>С. Энх-Од</h4>
                 
                 <div class="teacher-exp">Туршлага: __ жил</div>
               </div>
-            </div><div class="teacher-card">
+            </div><div class="teacher-card" style="cursor:pointer;" onclick="openCard('М','','Т. Мягмарсүрэн')">
               <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">М</div></div>
               <div class="teacher-info">
                 <h4>Т. Мягмарсүрэн</h4>
