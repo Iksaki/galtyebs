@@ -941,7 +941,7 @@
       <li><a href="#nuur">Нүүр</a></li>
       <li><a href="#tuhai">Сургуулийн тухай</a></li>
       <li><a href="#medee">Мэдээ & Зарлал</a></li>
-      <li><a href="#bagsh">Багш нар</a></li>
+      <li><a href="#bagsh">Манай хамт олон</a></li>
       <li><a href="#holboo">Холбогдох</a></li>
     </ul>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Цэс">
@@ -952,7 +952,7 @@
     <a href="#nuur" onclick="toggleMenu()">Нүүр</a>
     <a href="#tuhai" onclick="toggleMenu()">Сургуулийн тухай</a>
     <a href="#medee" onclick="toggleMenu()">Мэдээ & Зарлал</a>
-    <a href="#bagsh" onclick="toggleMenu()">Багш нар</a>
+    <a href="#bagsh" onclick="toggleMenu()">Манай хамт олон</a>
     <a href="#holboo" onclick="toggleMenu()">Холбогдох</a>
   </div>
 </nav>
@@ -1091,50 +1091,7 @@
           </ul>
         </div>
 
-        <!-- Сургуулийн захиргаа -->
-        <div style="margin-top:2rem;">
-          <div class="section-label" style="margin-bottom:1.2rem;">Сургуулийн захиргаа</div>
 
-          <!-- Захирал -->
-          <div style="background:var(--navy);border-radius:10px;padding:1.2rem 1.5rem;display:flex;align-items:center;gap:1.2rem;margin-bottom:1rem;border:1.5px solid var(--gold);">
-            <div class="teacher-photo" style="width:70px;height:70px;min-height:70px;flex-shrink:0;border-radius:50%;overflow:hidden;position:relative;">
-              <div class="teacher-bg-pattern"></div>
-              <div class="teacher-avatar" style="font-size:1.6rem;">Ц</div>
-            </div>
-            <div>
-              <div style="font-size:0.68rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Захирал</div>
-              <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff;">А. Цэрэнхүү</div>
-            </div>
-          </div>
-
-          <!-- Менежер, нийгмийн ажилтан -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
-            <div style="background:var(--off-white);border-radius:10px;padding:1rem 0.75rem;text-align:center;border:1px solid #e0e0e0;">
-              <div class="teacher-photo" style="width:56px;height:56px;min-height:56px;border-radius:50%;overflow:hidden;position:relative;margin:0 auto 0.6rem;">
-                <div class="teacher-bg-pattern"></div>
-                <div class="teacher-avatar" style="font-size:1.1rem;">Ч</div>
-              </div>
-              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Менежер</div>
-              <div style="font-size:0.88rem;font-weight:600;color:var(--navy);">С. Чулуунбаатар</div>
-            </div>
-            <div style="background:var(--off-white);border-radius:10px;padding:1rem 0.75rem;text-align:center;border:1px solid #e0e0e0;">
-              <div class="teacher-photo" style="width:56px;height:56px;min-height:56px;border-radius:50%;overflow:hidden;position:relative;margin:0 auto 0.6rem;">
-                <div class="teacher-bg-pattern"></div>
-                <div class="teacher-avatar" style="font-size:1.1rem;">Б</div>
-              </div>
-              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Менежер</div>
-              <div style="font-size:0.88rem;font-weight:600;color:var(--navy);">Д. Бямбасүрэн</div>
-            </div>
-            <div style="background:var(--off-white);border-radius:10px;padding:1rem 0.75rem;text-align:center;border:1px solid #e0e0e0;grid-column:1/-1;">
-              <div class="teacher-photo" style="width:56px;height:56px;min-height:56px;border-radius:50%;overflow:hidden;position:relative;margin:0 auto 0.6rem;">
-                <div class="teacher-bg-pattern"></div>
-                <div class="teacher-avatar" style="font-size:1.1rem;">Д</div>
-              </div>
-              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Нийгмийн ажилтан</div>
-              <div style="font-size:0.88rem;font-weight:600;color:var(--navy);">Э. Дашдулам</div>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>
@@ -1158,481 +1115,453 @@
 </section>
 
 <!-- TEACHERS -->
+<style>
+.team-group { margin-bottom: 2.5rem; }
+.team-group-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--gold);
+  display: inline-block;
+}
+.team-admin-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.admin-staff-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media(max-width:700px) {
+  .team-admin-grid { grid-template-columns: 1fr; }
+  .admin-staff-col { grid-template-columns: repeat(3,1fr); }
+}
+@media(max-width:480px) {
+  .admin-staff-col { grid-template-columns: 1fr 1fr; }
+}
+</style>
 <section id="bagsh">
   <div class="container">
     <div class="teachers-intro">
       <div>
-        <div class="section-label">Манай баг</div>
-        <h2 class="section-title">Багш нарын танилцуулга</h2>
+        <div class="section-label">Манай хамт олон</div>
+        <h2 class="section-title">Манай хамт олон</h2>
         <div class="gold-line"></div>
-        <p class="section-sub">
-          Галт ЕБС-ийн багш нар нь өндөр мэргэжлийн ур чадвар, олон жилийн туршлагатай, суралцагч бүрт хандах онцгой хайр энэрэлтэй хамт олон юм.
-        </p>
+        <p class="section-sub">Галт ЕБС-ийн багш нар нь өндөр мэргэжлийн ур чадвар, олон жилийн туршлагатай, суралцагч бүрт хандах онцгой хайр энэрэлтэй хамт олон юм.</p>
       </div>
       <div style="background:var(--white);border-radius:8px;padding:2.5rem;border-left:3px solid var(--gold);">
         <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:0.5rem;">80+</div>
         <div style="font-size:0.85rem;color:var(--text-mid);line-height:1.7;">Мэргэжлийн боловсролтой, тогтмол давтан сургалтад хамрагддаг, суралцагчдын ирээдүйд зориулж тасралтгүй ажилладаг багш, ажилтантай.</div>
       </div>
     </div>
-    <div class="teachers-grid">
-      <!-- Teacher cards -->
-       <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Н</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Б. Наранцэцэг</h4>
-          <div class="teacher-subject">Монгол хэл & Уран зохиол</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Ж</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Х. Жавзансүрэн</h4>
-          <div class="teacher-subject">Монгол хэл & Уран зохиол</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Г</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Л. Гүрмаа</h4>
-          <div class="teacher-subject">Монгол хэл & Уран зохиол</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Ц</div>
-        </div>
-        <div class="teacher-info">
-          <h4>А. Циенцогзол</h4>
-          <div class="teacher-subject">Монгол хэл & Уран зохиол</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Н</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Н. Насантогтох</h4>
-          <div class="teacher-subject">Монгол хэл & Уран зохиол</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Н</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Ж. Нансалмаа</h4>
-          <div class="teacher-subject">Монгол хэл & Уран зохиол</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
 
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Э</div>
+    <!-- Захиргаа -->
+    <div class="team-group" style="margin-bottom:3rem;">
+      <div class="team-group-label">Сургуулийн захиргаа</div>
+      <div style="margin-top:1.5rem;">
+        <div class="team-admin-grid">
+        <!-- Захирал - том босоо карт -->
+        <div class="teacher-card admin-director">
+          <div class="teacher-photo" style="aspect-ratio:3/4;">
+            <div class="teacher-bg-pattern"></div>
+            <div class="teacher-avatar" style="width:120px;height:120px;font-size:3.2rem;">Ц</div>
+          </div>
+          <div class="teacher-info" style="text-align:center;">
+            <div class="teacher-subject">Захирал</div>
+            <h4 style="font-size:1.3rem;">А. Цэрэнхүү</h4>
+          </div>
         </div>
-        <div class="teacher-info">
-          <h4>М. Эрдэнэцэцэг</h4>
-          <div class="teacher-subject">Математик</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Э</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Г. Эрдэнэтуяа</h4>
-          <div class="teacher-subject">Математик</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Ж</div>
-        </div>
-        <div class="teacher-info">
-          <h4>С. Жавзандулам</h4>
-          <div class="teacher-subject">Математик</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Ч</div>
-        </div>
-        <div class="teacher-info">
-          <h4>С. Чулуунбаатар</h4>
-          <div class="teacher-subject">Математик</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Х</div>
-        </div>
-        <div class="teacher-info">
-          <h4>П. Хишигбаяр</h4>
-          <div class="teacher-subject">Математик</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">С</div>
-        </div>
-        <div class="teacher-info">
-          <h4>П. Сарангэрэл</h4>
-          <div class="teacher-subject">Физик</div>
-          <div class="teacher-exp">Туршлага:__ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Н</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Ч. Нарантуяа</h4>
-          <div class="teacher-subject">Физик</div>
-          <div class="teacher-exp">Туршлага:__ жил</div>
-        </div>
-      </div>
-
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Д</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Б. Дэчмаа</h4>
-          <div class="teacher-subject">Англи хэл</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Б</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Ю. Буянзаяа</h4>
-          <div class="teacher-subject">Англи хэл</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Б</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Д. Булгантамир</h4>
-          <div class="teacher-subject">Англи хэл</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-         <div class="teacher-avatar">Б</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Ч. Содномпил</h4>
-          <div class="teacher-subject">Англи хэл</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">А</div>
-        </div>
-        <div class="teacher-info">
-          <h4>С. Адъяа</h4>
-          <div class="teacher-subject">Биологи</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Б</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Б. Баасанням</h4>
-          <div class="teacher-subject">Биологи</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Д</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Э. Даваа-Очир</h4>
-          <div class="teacher-subject">Нийгмийн ухаан & Түүх</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">А</div>
-        </div>
-        <div class="teacher-info">
-          <h4>С. Алтантуяа</h4>
-          <div class="teacher-subject">Нийгмийн ухаан & Түүх</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">О</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Г. Оюунзаяа</h4>
-          <div class="teacher-subject">Нийгмийн ухаан & Түүх</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Г</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Ч. Гэрэлтуяа</h4>
-          <div class="teacher-subject">Нийгмийн ухаан</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Ц</div>
-        </div>
-        <div class="teacher-info">
-          <h4>У. Цэрэнням</h4>
-          <div class="teacher-subject">Нийгмийн ухаан</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">А</div>
-        </div>
-        <div class="teacher-info">
-          <h4>П. Амаржаргал</h4>
-          <div class="teacher-subject">Газарзүй</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Б</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Х. Баасанбаяр</h4>
-          <div class="teacher-subject">Мэдээлэл зүй</div>
-          <div class="teacher-exp">Туршлага: __ жил</div>
-        </div>
-      </div>
-
+        <!-- Бусад 3 карт -->
+        <div class="admin-staff-col">
           <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-        <div class="teacher-avatar">А</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Г. Ариунжаргал</h4>
-          <div class="teacher-subject">Хими</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
+            <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ч</div></div>
+            <div class="teacher-info"><div class="teacher-subject">Менежер</div><h4>С. Чулуунбаатар</h4></div>
+          </div>
           <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Т</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Х. Түмэндэмбэрэл</h4>
-          <div class="teacher-subject">Хими</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-
+            <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
+            <div class="teacher-info"><div class="teacher-subject">Менежер</div><h4>Д. Бямбасүрэн</h4></div>
+          </div>
           <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Л</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Л. Мөнхцэцэг</h4>
-          <div class="teacher-subject">Орос хэл</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
+            <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Д</div></div>
+            <div class="teacher-info"><div class="teacher-subject">Нийгмийн ажилтан</div><h4>Э. Дашдулам</h4></div>
+          </div>
         </div>
       </div>
-
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Х</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Н. Халтар</h4>
-          <div class="teacher-subject">Эрүүл мэнд</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
       </div>
-
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Б</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Г. Батхишиг</h4>
-          <div class="teacher-subject">Дүрслэх урлаг & Технологи</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Н</div>
-        </div>
-        <div class="teacher-info">
-          <h4>М. Нэргүй</h4>
-          <div class="teacher-subject">Технологи</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Н</div>
-        </div>
-        <div class="teacher-info">
-          <h4>П. Намдагсүрэн</h4>
-          <div class="teacher-subject">Технологи</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Ц</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Б. Цэрэнчимэд</h4>
-          <div class="teacher-subject">Технологи</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Б</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Б. Баярсүрэн</h4>
-          <div class="teacher-subject">Биеийн тамир</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-       <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">М</div>
-        </div>
-        <div class="teacher-info">
-          <h4>В. Мягмарсүрэн</h4>
-          <div class="teacher-subject">Биеийн тамир</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-       <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Р</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Ц. Рааш</h4>
-          <div class="teacher-subject">Биеийн тамир</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-       <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Б</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Д. Баярмаа</h4>
-          <div class="teacher-subject">Биеийн тамир</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-
-       <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">Э</div>
-        </div>
-        <div class="teacher-info">
-          <h4>С. Энх-Од</h4>
-          <div class="teacher-subject">Дуу, хөгжим</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-      <div class="teacher-card">
-        <div class="teacher-photo">
-          <div class="teacher-bg-pattern"></div>
-          <div class="teacher-avatar">М</div>
-        </div>
-        <div class="teacher-info">
-          <h4>Т. Мягмарсүрэн</h4>
-          <div class="teacher-subject">Дуу, хөгжим</div>
-          <div class="teacher-exp">Туршлага __ жил</div>
-        </div>
-      </div>
-
-
-
     </div>
+
+    <!-- Багш нар бүлгээр -->
+    
+      <div class="team-group">
+        <div class="team-group-label">Монгол хэл & Уран зохиол</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
+              <div class="teacher-info">
+                <h4>Б. Наранцэцэг</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ж</div></div>
+              <div class="teacher-info">
+                <h4>Х. Жавзансүрэн</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Г</div></div>
+              <div class="teacher-info">
+                <h4>Л. Гүрмаа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ц</div></div>
+              <div class="teacher-info">
+                <h4>А. Циенцогзол</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
+              <div class="teacher-info">
+                <h4>Н. Насантогтох</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
+              <div class="teacher-info">
+                <h4>Ж. Нансалмаа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Математик</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Э</div></div>
+              <div class="teacher-info">
+                <h4>М. Эрдэнэцэг</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Э</div></div>
+              <div class="teacher-info">
+                <h4>Г. Эрдэнэтуяа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ж</div></div>
+              <div class="teacher-info">
+                <h4>С. Жавзандулам</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ч</div></div>
+              <div class="teacher-info">
+                <h4>С. Чулуунбаатар</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Х</div></div>
+              <div class="teacher-info">
+                <h4>П. Хишигбаяр</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Физик</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">С</div></div>
+              <div class="teacher-info">
+                <h4>П. Сарангэрэл</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
+              <div class="teacher-info">
+                <h4>Ч. Нарантуяа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Англи хэл</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Д</div></div>
+              <div class="teacher-info">
+                <h4>Б. Дэчмаа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
+              <div class="teacher-info">
+                <h4>Ю. Буянзаяа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
+              <div class="teacher-info">
+                <h4>Д. Булгантамир</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">С</div></div>
+              <div class="teacher-info">
+                <h4>Ч. Содномпил</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Биологи</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">А</div></div>
+              <div class="teacher-info">
+                <h4>С. Адъяа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
+              <div class="teacher-info">
+                <h4>Б. Баасанням</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Нийгмийн ухаан & Түүх</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Д</div></div>
+              <div class="teacher-info">
+                <h4>Э. Даваа-Очир</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">А</div></div>
+              <div class="teacher-info">
+                <h4>С. Алтантуяа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">О</div></div>
+              <div class="teacher-info">
+                <h4>Г. Оюунзаяа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Г</div></div>
+              <div class="teacher-info">
+                <h4>Ч. Гэрэлтуяа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ц</div></div>
+              <div class="teacher-info">
+                <h4>У. Цэрэнням</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Газарзүй</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">А</div></div>
+              <div class="teacher-info">
+                <h4>П. Амаржаргал</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Мэдээлэл зүй</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
+              <div class="teacher-info">
+                <h4>Х. Баасанбаяр</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Хими</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">А</div></div>
+              <div class="teacher-info">
+                <h4>Г. Ариунжаргал</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Т</div></div>
+              <div class="teacher-info">
+                <h4>Х. Түмэндэмбэрэл</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Орос хэл</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">М</div></div>
+              <div class="teacher-info">
+                <h4>Л. Мөнхцэцэг</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Эрүүл мэнд</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Х</div></div>
+              <div class="teacher-info">
+                <h4>Н. Халтар</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Дүрслэх урлаг & Технологи</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
+              <div class="teacher-info">
+                <h4>Г. Батхишиг</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
+              <div class="teacher-info">
+                <h4>М. Нэргүй</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Н</div></div>
+              <div class="teacher-info">
+                <h4>П. Намдагсүрэн</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Ц</div></div>
+              <div class="teacher-info">
+                <h4>Б. Цэрэнчимэд</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Биеийн тамир</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
+              <div class="teacher-info">
+                <h4>Б. Баярсүрэн</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">М</div></div>
+              <div class="teacher-info">
+                <h4>В. Мягмарсүрэн</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Р</div></div>
+              <div class="teacher-info">
+                <h4>Ц. Рааш</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Б</div></div>
+              <div class="teacher-info">
+                <h4>Д. Баярмаа</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="team-group">
+        <div class="team-group-label">Дуу, хөгжим</div>
+        <div class="teachers-grid" style="margin-top:1rem;">
+          <div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">Э</div></div>
+              <div class="teacher-info">
+                <h4>С. Энх-Од</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div><div class="teacher-card">
+              <div class="teacher-photo"><div class="teacher-bg-pattern"></div><div class="teacher-avatar">М</div></div>
+              <div class="teacher-info">
+                <h4>Т. Мягмарсүрэн</h4>
+                
+                <div class="teacher-exp">Туршлага: __ жил</div>
+              </div>
+            </div>
+        </div>
+      </div>
   </div>
 </section>
 
@@ -1702,7 +1631,7 @@
     <ul class="footer-links">
       <li><a href="#nuur">Нүүр</a></li>
       <li><a href="#medee">Мэдээ</a></li>
-      <li><a href="#bagsh">Багш нар</a></li>
+      <li><a href="#bagsh">Манай хамт олон</a></li>
       <li><a href="#tuhai">Сургуулийн тухай</a></li>
       <li><a href="#holboo">Холбогдох</a></li>
     </ul>
