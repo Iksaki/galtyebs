@@ -410,12 +410,26 @@
 
   .hero-stats {
     display: flex;
-    gap: 3rem;
+    gap: 0;
     margin-top: 4rem;
     padding-top: 3rem;
     border-top: 1px solid rgba(255,255,255,0.08);
     animation: fadeUp 0.8s 0.4s ease both;
     flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    max-width: 560px;
+  }
+
+  .hero-stats > div {
+    flex: 1;
+    min-width: 120px;
+    padding: 0 1.5rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .hero-stats > div:last-child {
+    border-right: none;
   }
 
   .stat-num {
@@ -1041,7 +1055,7 @@
   <div class="hero-grid"></div>
   <div class="hero-circle"></div>
   <div class="hero-content">
-    <div class="hero-tag">12 жилийн ерөнхий боловсрол</div>
+    <div class="hero-tag">12 жилийн ахлах сургууль</div>
     <h1 class="hero-h1">Мэдлэг, <em>Ирээдүй,</em> Ахиц</h1>
     <p class="hero-desc">
       Галт Ерөнхий Боловсролын Сургууль — Зөв Монгол иргэнийг төлөвшүүлдэг улсын тэргүүний сургууль болно.
@@ -1059,10 +1073,6 @@
       <div>
         <div class="stat-num">80+</div>
         <div class="stat-label">Жилийн түүхтэй</div>
-      </div>
-      <div>
-        <div class="stat-num">12</div>
-        <div class="stat-label">Жилийн ахлах сургууль</div>
       </div>
     </div>
   </div>
@@ -1149,6 +1159,11 @@
         <h2 class="section-title">Мэдээ & Зарлал</h2>
       </div>
       <button class="post-create-btn" id="postCreateBtn" onclick="openPostModal()" style="display:none">＋ Post хийх</button>
+    </div>
+    <div id="guestBanner" class="guest-banner" style="display:none">
+      <button onclick="openAuth();switchTab('register')" class="guest-register-btn">Бүртгүүлэх</button>
+      <span>эсвэл</span>
+      <button onclick="openAuth();switchTab('login')" class="guest-login-btn">Нэвтрэх</button>
     </div>
     <div id="postFeed" class="post-feed">
       <div class="post-empty">Одоогоор post байхгүй байна. Нэвтэрч post хийгээрэй!</div>
@@ -1877,6 +1892,12 @@ function closeLightbox() {
 .auth-error{color:#e53e3e;font-size:.82rem;text-align:center;display:none;padding:8px;background:#fff5f5;border-radius:6px;}
 .auth-success{color:#22c55e;font-size:.82rem;text-align:center;display:none;padding:8px;background:#f0fdf4;border-radius:6px;}
 .auth-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#8a8aaa;line-height:1;}
+.terms-box{background:#f8f6f1;border:1.5px solid #e0d5b8;border-radius:10px;padding:1rem;margin-top:.25rem;}
+.terms-title{font-weight:700;color:#0d1b3e;font-size:.88rem;margin-bottom:.75rem;letter-spacing:.02em;}
+.terms-list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.85rem;}
+.terms-item{font-size:.82rem;color:#4a4a6a;line-height:1.5;padding:.25rem 0;}
+.terms-check-label{display:flex;align-items:flex-start;gap:.6rem;cursor:pointer;font-size:.85rem;color:#1a1a2e;font-weight:500;border-top:1px solid #e0d5b8;padding-top:.75rem;margin-top:.25rem;}
+.terms-check-label input[type="checkbox"]{width:16px;height:16px;margin-top:2px;accent-color:#c9a84c;flex-shrink:0;cursor:pointer;}
 /* ── NAV ── */
 .nav-login-btn{background:#c9a84c;color:#0d1b3e;border:none;border-radius:6px;padding:8px 18px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:'Noto Sans',sans-serif;white-space:nowrap;}
 .nav-user{display:none;align-items:center;gap:10px;}
@@ -1889,6 +1910,9 @@ function closeLightbox() {
 /* ── POST FEED ── */
 .post-feed{display:flex;flex-direction:column;gap:1.5rem;max-width:700px;margin:0 auto;padding:2rem 0;}
 .post-empty{text-align:center;color:#8a8aaa;padding:3rem;font-size:1rem;}
+.guest-banner{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;background:linear-gradient(135deg,#f5e9c8,#faf5e9);border:1.5px solid #c9a84c;border-radius:10px;padding:.85rem 1.25rem;margin-bottom:1rem;font-size:.88rem;color:#4a4a6a;max-width:700px;margin-left:auto;margin-right:auto;}
+.guest-register-btn{background:#0d1b3e;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:'Noto Sans',sans-serif;}
+.guest-login-btn{background:none;border:1.5px solid #0d1b3e;color:#0d1b3e;border-radius:6px;padding:5px 14px;font-size:.84rem;font-weight:600;cursor:pointer;font-family:'Noto Sans',sans-serif;}
 .post-create-btn{background:#c9a84c;color:#0d1b3e;border:none;border-radius:8px;padding:10px 20px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:'Noto Sans',sans-serif;}
 .post-card{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.08);}
 .post-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
@@ -2015,9 +2039,23 @@ function closeLightbox() {
       <div><label>Утасны дугаар</label><input type="tel" id="regPhone" placeholder="99001234"></div>
       <div><label>Нууц үг</label><input type="password" id="regPass" placeholder="Дор хаяж 4 тэмдэгт"></div>
       <div><label>Нууц үг давтах</label><input type="password" id="regPass2" placeholder="Давтана уу"></div>
+      <div class="terms-box" id="termsBox">
+        <div class="terms-title">📋 Хамтын нийгэмлэгийн дүрэм</div>
+        <div class="terms-list">
+          <div class="terms-item">🚫 <strong>Зүй бус үг хэллэг ашиглахгүй байх</strong> — доромжлол, гутаан доромжлол, садар самуун үг хэрэглэхийг хориглоно.</div>
+          <div class="terms-item">🤝 <strong>Нэг нэгнээ хүндлэх</strong> — бусдыг үл тоох, дарамтлах, ялгаварлах хандлагыг хориглоно.</div>
+          <div class="terms-item">🔒 <strong>Хувийн мэдээллийг хамгаалах</strong> — бусдын зөвшөөрөлгүйгээр мэдээлэл нийтлэхгүй байх.</div>
+          <div class="terms-item">✅ <strong>Үнэн зөв мэдээлэл түгээх</strong> — худал мэдээ, гүтгэлгийг хориглоно.</div>
+          <div class="terms-item">🏫 <strong>Сургуулийн нэр хүндийг дээдлэх</strong> — Галт ЕБС-ийн нэр хүндэд харшлах агуулга нийтлэхгүй байх.</div>
+        </div>
+        <label class="terms-check-label">
+          <input type="checkbox" id="termsCheck" onchange="checkTerms()">
+          <span>Дээрх нөхцөлүүдийг уншиж танилцан, <strong>зөвшөөрч байна</strong></span>
+        </label>
+      </div>
       <div id="regError" class="auth-error"></div>
       <div id="regSuccess" class="auth-success"></div>
-      <button class="auth-btn" onclick="doRegister()">Бүртгүүлэх</button>
+      <button class="auth-btn" id="regBtn" onclick="doRegister()" disabled style="opacity:0.5;cursor:not-allowed">Бүртгүүлэх</button>
     </div>
   </div>
 </div>
@@ -2088,6 +2126,9 @@ function openAuth() { document.getElementById('authOverlay').classList.add('open
 function closeAuth() {
   document.getElementById('authOverlay').classList.remove('open');
   ['loginError','regError','regSuccess'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+  var cb = document.getElementById('termsCheck');
+  if(cb) cb.checked = false;
+  checkTerms();
 }
 function switchTab(tab) {
   document.querySelectorAll('.auth-tab').forEach(function(t){t.classList.remove('active');});
@@ -2101,7 +2142,28 @@ function setUserType(type) {
   var sf = document.getElementById('studentFields');
   if(type==='student') sf.classList.add('show'); else sf.classList.remove('show');
 }
+function checkTerms() {
+  var cb = document.getElementById('termsCheck');
+  var btn = document.getElementById('regBtn');
+  if(btn) {
+    if(cb && cb.checked) {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+    } else {
+      btn.disabled = true;
+      btn.style.opacity = '0.5';
+      btn.style.cursor = 'not-allowed';
+    }
+  }
+}
 function doRegister() {
+  var cb = document.getElementById('termsCheck');
+  if(!cb || !cb.checked) {
+    var errEl = document.getElementById('regError');
+    showErr(errEl, 'Нөхцөлүүдийг зөвшөөрнө үү.');
+    return;
+  }
   var type = (document.querySelector('.type-btn.active')||{}).dataset.type||'adult';
   var name = document.getElementById('regName').value.trim();
   var phone = document.getElementById('regPhone').value.trim();
@@ -2292,7 +2354,7 @@ function deletePost(id) {
 // ════ LIKE ════
 function toggleLike(postId) {
   var cur = JSON.parse(localStorage.getItem('galtyebs_current')||'null');
-  if(!cur){alert('Нэвтэрч орно уу!');return;}
+  if(!cur){openAuth();switchTab('register');return;}
   var key = 'galtyebs_likes_'+postId;
   var likes = JSON.parse(localStorage.getItem(key)||'[]');
   var idx = likes.indexOf(cur.phone);
@@ -2326,8 +2388,10 @@ function renderPosts() {
   var feed = document.getElementById('postFeed'); if(!feed) return;
   var btn = document.getElementById('postCreateBtn');
   if(btn) btn.style.display = cur ? '' : 'none';
+  var guestBanner = document.getElementById('guestBanner');
+  if(guestBanner) guestBanner.style.display = cur ? 'none' : 'block';
   if(posts.length===0) {
-    feed.innerHTML='<div class="post-empty">Одоогоор post байхгүй байна. Нэвтэрч post хийгээрэй!</div>';
+    feed.innerHTML='<div class="post-empty">' + (cur ? 'Одоогоор post байхгүй байна. Post хийгээрэй!' : 'Одоогоор post байхгүй байна.') + '</div>';
     return;
   }
   var isAdmin = cur && cur.name==='Админ';
