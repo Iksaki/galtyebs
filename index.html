@@ -2157,7 +2157,7 @@ function checkTerms() {
     }
   }
 }
-function doRegister() {
+function doRegister_OLD_DISABLED() {
   var cb = document.getElementById('termsCheck');
   if(!cb || !cb.checked) {
     var errEl = document.getElementById('regError');
@@ -2190,7 +2190,7 @@ function doRegister() {
   sucEl.textContent='✓ Амжилттай! Одоо нэвтэрнэ үү.'; sucEl.style.display='block';
   setTimeout(function(){switchTab('login');},1500);
 }
-function doLogin() {
+function doLogin_OLD_DISABLED() {
   var phone = document.getElementById('loginPhone').value.trim();
   var pass = document.getElementById('loginPass').value;
   var errEl = document.getElementById('loginError');
@@ -2207,7 +2207,7 @@ function doLogin() {
   localStorage.setItem('galtyebs_current',JSON.stringify(user));
   closeAuth(); updateUI();
 }
-function authLogout() {
+function authLogout_OLD_DISABLED() {
   localStorage.removeItem('galtyebs_current');
   updateUI();
 }
@@ -2218,7 +2218,7 @@ function openProfile() {
   if(!cur) return;
   _showProfile(cur, true);
 }
-function openOtherProfile(phone) {
+function openOtherProfile_OLD_DISABLED(phone) {
   var users = JSON.parse(localStorage.getItem('galtyebs_users')||'[]');
   var user = users.find(function(u){return u.phone===phone;});
   if(!user) return;
@@ -2260,7 +2260,7 @@ function _showProfile(user, isOwn) {
   document.getElementById('profileOverlay').classList.add('open');
 }
 function closeProfile() { document.getElementById('profileOverlay').classList.remove('open'); }
-function uploadProfilePic(input) {
+function uploadProfilePic_OLD_DISABLED(input) {
   var file = input.files[0]; if(!file) return;
   var reader = new FileReader();
   reader.onload = function(e) {
@@ -2276,7 +2276,7 @@ function uploadProfilePic(input) {
   };
   reader.readAsDataURL(file);
 }
-function saveProfile() {
+function saveProfile_OLD_DISABLED() {
   var cur = JSON.parse(localStorage.getItem('galtyebs_current')||'null'); if(!cur) return;
   cur.profession = document.getElementById('pfProfession').value.trim();
   cur.height = document.getElementById('pfHeight').value.trim();
@@ -2322,7 +2322,7 @@ function previewPostImgs(input) {
     reader.readAsDataURL(file);
   });
 }
-function submitPost() {
+function submitPost_OLD_DISABLED() {
   var cur = JSON.parse(localStorage.getItem('galtyebs_current')||'null'); if(!cur) return;
   var text = document.getElementById('postText').value.trim();
   if(!text && _postImgs.length===0) return;
@@ -2337,7 +2337,7 @@ function submitPost() {
   localStorage.setItem('galtyebs_posts',JSON.stringify(posts));
   closePostModal(); renderPosts();
 }
-function deletePost(id) {
+function deletePost_OLD_DISABLED(id) {
   var cur = JSON.parse(localStorage.getItem('galtyebs_current')||'null'); if(!cur) return;
   if(!confirm('Энэ post-г устгах уу?')) return;
   var posts = JSON.parse(localStorage.getItem('galtyebs_posts')||'[]');
@@ -2352,7 +2352,7 @@ function deletePost(id) {
 
 
 // ════ LIKE ════
-function toggleLike(postId) {
+function toggleLike_OLD_DISABLED(postId) {
   var cur = JSON.parse(localStorage.getItem('galtyebs_current')||'null');
   if(!cur){openAuth();switchTab('register');return;}
   var key = 'galtyebs_likes_'+postId;
@@ -2382,7 +2382,7 @@ function toggleLike(postId) {
 
 
 // ════ RENDER POSTS ════
-function renderPosts() {
+function renderPosts_OLD_DISABLED() {
   var cur = JSON.parse(localStorage.getItem('galtyebs_current')||'null');
   var posts = JSON.parse(localStorage.getItem('galtyebs_posts')||'[]');
   var feed = document.getElementById('postFeed'); if(!feed) return;
@@ -2451,10 +2451,10 @@ function updateUI() {
     if(navLoginBtn) navLoginBtn.style.display='';
   }
   updateNavAvatar();
-  renderPosts();
+  // posts rendered by Firebase realtime listener
 }
 
-document.addEventListener('DOMContentLoaded', function() { updateUI(); });
+// DOMContentLoaded handled by Firebase module
 
 
 // ════ HERO SLIDESHOW ════
@@ -2483,5 +2483,198 @@ document.addEventListener('DOMContentLoaded', function() { updateUI(); });
   }, {passive: true});
 })();
 </script>
+<!-- Firebase SDK -->
+<script>
+(async function() {
+  var _imp = await Promise.all([
+    import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"),
+    import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js")
+  ]);
+  var initializeApp = _imp[0].initializeApp;
+  var _fs = _imp[1];
+  var getFirestore=_fs.getFirestore,doc=_fs.doc,setDoc=_fs.setDoc,getDoc=_fs.getDoc,
+      collection=_fs.collection,addDoc=_fs.addDoc,deleteDoc=_fs.deleteDoc,
+      query=_fs.query,orderBy=_fs.orderBy,onSnapshot=_fs.onSnapshot,
+      updateDoc=_fs.updateDoc,arrayUnion=_fs.arrayUnion,arrayRemove=_fs.arrayRemove;
+
+  var app = initializeApp({
+    apiKey:"AIzaSyAzeolCzB8pHe9z0bDXVaviBn4dHBxyLgs",
+    authDomain:"galtyebs.firebaseapp.com",
+    projectId:"galtyebs",
+    storageBucket:"galtyebs.firebasestorage.app",
+    messagingSenderId:"823950503640",
+    appId:"1:823950503640:web:d7c22f3e0e96403b8d71ad"
+  });
+  var db = getFirestore(app);
+
+  function getCur(){return JSON.parse(localStorage.getItem('galtyebs_current')||'null');}
+  function showE(id,msg){var e=document.getElementById(id);if(e){e.textContent=msg;e.style.display='block';}}
+  function hideE(id){var e=document.getElementById(id);if(e)e.style.display='none';}
+
+  window.doRegister = async function(){
+    var cb=document.getElementById('termsCheck');
+    if(!cb||!cb.checked){showE('regError','Nuhtsuluudiig zuvshuurnuu.');return;}
+    var name=document.getElementById('regName').value.trim();
+    var phone=document.getElementById('regPhone').value.trim();
+    var pass=document.getElementById('regPass').value;
+    var pass2=document.getElementById('regPass2').value;
+    var type=document.getElementById('regType').value;
+    hideE('regError');hideE('regSuccess');
+    if(!name||!phone||!pass||!pass2){showE('regError','Buh talbariig bugluunu uu.');return;}
+    if(pass!==pass2){showE('regError','Nuuts ug taarahgui.');return;}
+    if(pass.length<4){showE('regError','Nuuts ug 4+ temdegtei baikh yostoi.');return;}
+    var ud={name:name,phone:phone,pass:pass,type:type,pic:'',profession:'',height:'',bio:''};
+    if(type==='student'){
+      var grade=document.getElementById('regGrade').value;
+      var group=document.getElementById('regGroup').value.trim().toUpperCase();
+      if(!grade||!group){showE('regError','Angi bulgee oruulna uu.');return;}
+      ud.grade=grade;ud.group=group;
+    }
+    try{
+      var sn=await getDoc(doc(db,'users',phone));
+      if(sn.exists()){showE('regError','En dugaar burtgeltei baina.');return;}
+      await setDoc(doc(db,'users',phone),ud);
+      showE('regSuccess','Amjilttai burtgullee!');
+      setTimeout(function(){switchTab('login');},1500);
+    }catch(e){showE('regError','Aldaa: '+e.message);}
+  };
+
+  window.doLogin = async function(){
+    var phone=document.getElementById('loginPhone').value.trim();
+    var pass=document.getElementById('loginPass').value;
+    hideE('loginError');
+    if(!phone||!pass){showE('loginError','Buh talbariig bugluunu uu.');return;}
+    if(phone==='Admin'&&pass==='GaltKhovsgolSurguul'){
+      localStorage.setItem('galtyebs_current',JSON.stringify({name:'Admin',phone:'admin',type:'admin',pic:'',profession:'',height:'',bio:''}));
+      closeAuth();updateUI();return;
+    }
+    try{
+      var sn=await getDoc(doc(db,'users',phone));
+      if(!sn.exists()){showE('loginError','Utas esveel nuuts ug buruu baina.');return;}
+      var user=sn.data();
+      if(user.pass!==pass){showE('loginError','Utas esveel nuuts ug buruu baina.');return;}
+      localStorage.setItem('galtyebs_current',JSON.stringify(user));
+      closeAuth();updateUI();
+    }catch(e){showE('loginError','Aldaa: '+e.message);}
+  };
+
+  window.authLogout=function(){
+    localStorage.removeItem('galtyebs_current');
+    updateUI();
+  };
+
+  window.saveProfile=async function(){
+    var cur=getCur();if(!cur)return;
+    cur.profession=document.getElementById('pfProfession').value.trim();
+    cur.height=document.getElementById('pfHeight').value.trim();
+    cur.bio=document.getElementById('pfBio').value.trim();
+    localStorage.setItem('galtyebs_current',JSON.stringify(cur));
+    if(cur.phone!=='admin'){try{await updateDoc(doc(db,'users',cur.phone),{profession:cur.profession,height:cur.height,bio:cur.bio});}catch(e){}}
+    var btn=document.getElementById('profileEditArea').querySelector('.profile-save-btn');
+    if(btn){btn.textContent='OK!';btn.style.background='#22c55e';setTimeout(function(){btn.textContent='Save';btn.style.background='#0d1b3e';},2000);}
+  };
+
+  window.uploadProfilePic=function(input){
+    var file=input.files[0];if(!file)return;
+    var reader=new FileReader();
+    reader.onload=async function(e){
+      var cur=getCur();if(!cur)return;
+      cur.pic=e.target.result;
+      localStorage.setItem('galtyebs_current',JSON.stringify(cur));
+      if(cur.phone!=='admin'){try{await updateDoc(doc(db,'users',cur.phone),{pic:cur.pic});}catch(ex){}}
+      _showProfile(cur,true);updateNavAvatar();
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.openOtherProfile=async function(phone){
+    try{var sn=await getDoc(doc(db,'users',phone));if(sn.exists())_showProfile(sn.data(),false);}catch(e){}
+  };
+
+  window.submitPost=async function(){
+    var cur=getCur();if(!cur)return;
+    var text=document.getElementById('postText').value.trim();
+    if(!text&&_postImgs.length===0)return;
+    try{
+      await addDoc(collection(db,'posts'),{
+        author:cur.name,phone:cur.phone,type:cur.type,
+        grade:cur.grade||'',group:cur.group||'',pic:cur.pic||'',
+        text:text,imgs:_postImgs.slice(),
+        date:new Date().toLocaleDateString('mn-MN'),
+        createdAt:Date.now(),likes:[]
+      });
+      closePostModal();
+    }catch(e){alert('Aldaa: '+e.message);}
+  };
+
+  window.deletePost=async function(id){
+    var cur=getCur();if(!cur)return;
+    if(!confirm('Ustgakh uu?'))return;
+    try{await deleteDoc(doc(db,'posts',id));}catch(e){}
+  };
+
+  window.toggleLike=async function(postId){
+    var cur=getCur();
+    if(!cur){openAuth();switchTab('register');return;}
+    try{
+      var ref=doc(db,'posts',postId);
+      var sn=await getDoc(ref);if(!sn.exists())return;
+      var likes=sn.data().likes||[];
+      if(likes.indexOf(cur.phone)===-1)await updateDoc(ref,{likes:arrayUnion(cur.phone)});
+      else await updateDoc(ref,{likes:arrayRemove(cur.phone)});
+    }catch(e){}
+  };
+
+  function renderPostsData(posts){
+    var cur=getCur();
+    var feed=document.getElementById('postFeed');if(!feed)return;
+    var btn=document.getElementById('postCreateBtn');if(btn)btn.style.display=cur?'':'none';
+    var gb=document.getElementById('guestBanner');if(gb)gb.style.display=cur?'none':'block';
+    if(posts.length===0){feed.innerHTML='<div class="post-empty">Post baikhgui baina.</div>';return;}
+    var isAdmin=cur&&cur.name==='Admin';
+    feed.innerHTML=posts.map(function(p){
+      var canDel=cur&&(p.phone===cur.phone||isAdmin);
+      var isOwn=cur&&p.phone===cur.phone;
+      var canView=cur&&!isOwn&&p.phone!=='admin';
+      var avC=isOwn?'onclick="openProfile()"':(canView?'onclick="openOtherProfile(''+p.phone+'')"':'');
+      var av=p.pic?('<img src="'+p.pic+'" class="post-avatar" '+avC+'>'):('<div class="post-avatar-placeholder" '+avC+'>'+(p.author?p.author[0].toUpperCase():'?')+'</div>');
+      var nC=isOwn?'onclick="openProfile()"':(canView?'onclick="openOtherProfile(''+p.phone+'')"':'');
+      var meta=p.type==='student'?(p.grade+'-r angi, '+p.group+' buleg'):(p.author==='Admin'?'Admin':'Adult');
+      var imgs=(p.imgs&&p.imgs.length>0)?('<div class="post-imgs c'+Math.min(p.imgs.length,4)+'">'+p.imgs.slice(0,4).map(function(s){return '<div class="pii"><img src="'+s+'"></div>';}).join('')+'</div>'):'';
+      var likes=p.likes||[];
+      var isLiked=cur&&likes.indexOf(cur.phone)!==-1;
+      var ab='<div class="post-action-bar">'
+        +'<button class="like-btn'+(isLiked?' liked':'')+'" id="likeBtn_'+p._id+'" onclick="toggleLike(''+p._id+'')">'
+        +'<span class="heart" id="heart_'+p._id+'">?</span>'
+        +'<span class="like-count" id="likeCnt_'+p._id+'">'+likes.length+'</span>'
+        +'</button></div>';
+      return '<div class="post-card">'
+        +'<div class="post-header">'+av
+        +'<div><div class="post-author" '+nC+'>'+p.author+'</div><div class="post-meta">'+meta+' - '+p.date+'</div></div>'
+        +(canDel?'<button class="post-del-btn" onclick="deletePost(''+p._id+'')">Del</button>':'')
+        +'</div>'
+        +(p.text?'<div class="post-text">'+p.text+'</div>':'')
+        +imgs+ab+'</div>';
+    }).join('');
+    posts.forEach(function(p){
+      var likes=p.likes||[];
+      var isLiked=cur&&likes.indexOf(cur.phone)!==-1;
+      var h=document.getElementById('heart_'+p._id);
+      if(h)h.textContent=isLiked?'\u2764\uFE0F':'\uD83E\uDD0D';
+    });
+  }
+
+  function listenPosts(){
+    var q=query(collection(db,'posts'),orderBy('createdAt','desc'));
+    onSnapshot(q,function(snap){
+      var posts=[];
+      snap.forEach(function(d){var data=d.data();data._id=d.id;posts.push(data);});
+      renderPostsData(posts);
+    });
+  }
+
+  listenPosts();
+  updateUI();
+})();
+</script>
 </body>
-</html>
