@@ -2574,7 +2574,7 @@ function updateUI() {
     var pass=document.getElementById('loginPass').value;
     hideE('loginError');
     if(!phone||!pass){showE('loginError','Buh talbariig bugluunu uu.');return;}
-    if(phone==='Admin'&&pass==='GaltKhovsgolSurguul'){
+    if((phone==='Admin'||phone==='admin')&&pass==='GaltKhovsgolSurguul'){
       localStorage.setItem('galtyebs_current',JSON.stringify({name:'Admin',phone:'admin',type:'admin',pic:'',profession:'',height:'',bio:''}));
       closeAuth();updateUI();return;
     }
