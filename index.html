@@ -2027,6 +2027,7 @@ function closeLightbox() {
       <div>
         <label>Та хэн бэ?</label>
         <div class="auth-type-toggle">
+          <input type="hidden" id="regType" value="adult">
           <button class="type-btn active" data-type="adult" onclick="setUserType('adult')">🧑 Насанд хүрсэн</button>
           <button class="type-btn" data-type="student" onclick="setUserType('student')">🎒 Сурагч</button>
         </div>
@@ -2149,6 +2150,7 @@ function setUserType(type) {
   document.querySelector('[data-type="'+type+'"]').classList.add('active');
   var sf = document.getElementById('studentFields');
   if(type==='student') sf.classList.add('show'); else sf.classList.remove('show');
+  var rt = document.getElementById('regType'); if(rt) rt.value = type;
 }
 function checkTerms() {
   var cb = document.getElementById('termsCheck');
