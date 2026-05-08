@@ -2513,7 +2513,7 @@ function updateUI() {
   var db = getFirestore(app);
   var auth = getAuth(app);
 
-  function toEmail(phone){ return phone.replace(/[^0-9a-zA-Z]/g,'')+'@galtyebs.mn'; }
+  function toEmail(phone){ return phone.toString().toLowerCase().replace(/[^0-9a-z]/g,'')+'@galtyebs.mn'; }
   function showE(id,msg){var e=document.getElementById(id);if(e){e.textContent=msg;e.style.display='block';}}
   function hideE(id){var e=document.getElementById(id);if(e)e.style.display='none';}
 
