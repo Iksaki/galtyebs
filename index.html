@@ -1027,6 +1027,14 @@
         <span>Ерөнхий Боловсролын Сургууль</span>
       </div>
     </a>
+    <div id="navAuthArea" style="display:flex;align-items:center;gap:12px;">
+      <div class="nav-user" id="navUser" style="display:none;align-items:center;gap:8px;">
+        <div id="navAvatarWrap"></div>
+        <span class="nav-user-name" id="navUserName"></span>
+        <button class="nav-logout-btn" onclick="authLogout()">&#x0413;&#x0430;&#x0440;&#x0430;&#x0445;</button>
+      </div>
+      <button class="nav-login-btn" id="navLoginBtn" onclick="openAuth()">&#x041D;&#x044D;&#x0432;&#x0442;&#x0440;&#x044D;&#x0445;</button>
+    </div>
     <ul class="nav-links">
       <li><a href="#nuur">Нүүр</a></li>
       <li><a href="#tuhai">Сургуулийн тухай</a></li>
@@ -1114,7 +1122,7 @@
         </div>
         <div class="about-mission" style="margin-top:2.5rem;">
           <div class="about-mission-title">Эрхэм зорилго</div>
-          <p>Сурагч бүрийг мэдлэг, чадвар, зөв хандлагатай иргэн болгон төлөвшүүлэх, орон нутгийн хөгжлийг дэмжих боловсролын чанартай үйлчилгээ үзүүлэхэд оршино.</p>
+          <p>Эрүүл, зөв, оюунлаг МОНГОЛ иргэнийг төлөвшүүлнэ.</p>
         </div>
         <div class="about-mission" style="margin-top:1rem;">
           <div class="about-mission-title">Алсын хараа</div>
@@ -2431,23 +2439,15 @@ function renderPosts_OLD_DISABLED() {
 // ════ MAIN UI UPDATE ════
 function updateUI() {
   var cur = JSON.parse(localStorage.getItem('galtyebs_current')||'null');
-  var navInner = document.querySelector('.nav-inner');
-  if(!document.getElementById('navAuthArea') && navInner) {
-    var div = document.createElement('div');
-    div.id='navAuthArea';
-    div.style.cssText='display:flex;align-items:center;gap:12px;';
-    div.innerHTML='<div class="nav-user" id="navUser"><div id="navAvatarWrap"></div><span class="nav-user-name" id="navUserName"></span><button class="nav-logout-btn" onclick="authLogout()">Гарах</button></div><button class="nav-login-btn" id="navLoginBtn" onclick="openAuth()">Нэвтрэх</button>';
-    navInner.appendChild(div);
-  }
   var navUser=document.getElementById('navUser');
   var navLoginBtn=document.getElementById('navLoginBtn');
   var navUserName=document.getElementById('navUserName');
   if(cur) {
-    if(navUser) navUser.classList.add('show');
+    if(navUser) navUser.style.display='flex';
     if(navLoginBtn) navLoginBtn.style.display='none';
     if(navUserName) navUserName.textContent=cur.name;
   } else {
-    if(navUser) navUser.classList.remove('show');
+    if(navUser) navUser.style.display='none';
     if(navLoginBtn) navLoginBtn.style.display='';
   }
   updateNavAvatar();
@@ -2488,14 +2488,19 @@ function updateUI() {
 (async function() {
   var _imp = await Promise.all([
     import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"),
-    import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js")
+    import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"),
+    import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js")
   ]);
   var initializeApp = _imp[0].initializeApp;
   var _fs = _imp[1];
+  var _au = _imp[2];
   var getFirestore=_fs.getFirestore,doc=_fs.doc,setDoc=_fs.setDoc,getDoc=_fs.getDoc,
       collection=_fs.collection,addDoc=_fs.addDoc,deleteDoc=_fs.deleteDoc,
       query=_fs.query,orderBy=_fs.orderBy,onSnapshot=_fs.onSnapshot,
       updateDoc=_fs.updateDoc,arrayUnion=_fs.arrayUnion,arrayRemove=_fs.arrayRemove;
+  var getAuth=_au.getAuth,signInWithEmailAndPassword=_au.signInWithEmailAndPassword,
+      createUserWithEmailAndPassword=_au.createUserWithEmailAndPassword,
+      signOut=_au.signOut,onAuthStateChanged=_au.onAuthStateChanged;
 
   var app = initializeApp({
     apiKey:"AIzaSyAzeolCzB8pHe9z0bDXVaviBn4dHBxyLgs",
@@ -2506,10 +2511,31 @@ function updateUI() {
     appId:"1:823950503640:web:d7c22f3e0e96403b8d71ad"
   });
   var db = getFirestore(app);
+  var auth = getAuth(app);
 
-  function getCur(){return JSON.parse(localStorage.getItem('galtyebs_current')||'null');}
+  function toEmail(phone){ return phone.replace(/[^0-9a-zA-Z]/g,'')+'@galtyebs.mn'; }
   function showE(id,msg){var e=document.getElementById(id);if(e){e.textContent=msg;e.style.display='block';}}
   function hideE(id){var e=document.getElementById(id);if(e)e.style.display='none';}
+
+  // Fires on every page load across all devices
+  onAuthStateChanged(auth, async function(fireUser) {
+    if(fireUser && fireUser.email !== 'admin@galtyebs.mn') {
+      var phone = fireUser.email.replace('@galtyebs.mn','');
+      try {
+        var sn = await getDoc(doc(db,'users',phone));
+        if(sn.exists()) {
+          localStorage.setItem('galtyebs_current', JSON.stringify(sn.data()));
+        }
+      } catch(e) {}
+    } else if(!fireUser) {
+      var cur = JSON.parse(localStorage.getItem('galtyebs_current')||'null');
+      if(cur && cur.phone !== 'admin') {
+        localStorage.removeItem('galtyebs_current');
+      }
+    }
+    updateUI();
+    listenPosts();
+  });
 
   window.doRegister = async function(){
     var cb=document.getElementById('termsCheck');
@@ -2522,8 +2548,8 @@ function updateUI() {
     hideE('regError');hideE('regSuccess');
     if(!name||!phone||!pass||!pass2){showE('regError','Buh talbariig bugluunu uu.');return;}
     if(pass!==pass2){showE('regError','Nuuts ug taarahgui.');return;}
-    if(pass.length<4){showE('regError','Nuuts ug 4+ temdegtei baikh yostoi.');return;}
-    var ud={name:name,phone:phone,pass:pass,type:type,pic:'',profession:'',height:'',bio:''};
+    if(pass.length<6){showE('regError','Nuuts ug 6+ temdegtei baikh yostoi.');return;}
+    var ud={name:name,phone:phone,type:type,pic:'',profession:'',height:'',bio:''};
     if(type==='student'){
       var grade=document.getElementById('regGrade').value;
       var group=document.getElementById('regGroup').value.trim().toUpperCase();
@@ -2533,10 +2559,14 @@ function updateUI() {
     try{
       var sn=await getDoc(doc(db,'users',phone));
       if(sn.exists()){showE('regError','En dugaar burtgeltei baina.');return;}
-      await setDoc(doc(db,'users',phone),ud);
+      await createUserWithEmailAndPassword(auth, toEmail(phone), pass);
+      await setDoc(doc(db,'users',phone), ud);
       showE('regSuccess','Amjilttai burtgullee!');
       setTimeout(function(){switchTab('login');},1500);
-    }catch(e){showE('regError','Aldaa: '+e.message);}
+    }catch(e){
+      if(e.code==='auth/email-already-in-use') showE('regError','En dugaar burtgeltei baina.');
+      else showE('regError','Aldaa: '+e.message);
+    }
   };
 
   window.doLogin = async function(){
@@ -2549,22 +2579,26 @@ function updateUI() {
       closeAuth();updateUI();return;
     }
     try{
-      var sn=await getDoc(doc(db,'users',phone));
-      if(!sn.exists()){showE('loginError','Utas esveel nuuts ug buruu baina.');return;}
-      var user=sn.data();
-      if(user.pass!==pass){showE('loginError','Utas esveel nuuts ug buruu baina.');return;}
-      localStorage.setItem('galtyebs_current',JSON.stringify(user));
-      closeAuth();updateUI();
-    }catch(e){showE('loginError','Aldaa: '+e.message);}
+      await signInWithEmailAndPassword(auth, toEmail(phone), pass);
+      closeAuth();
+    }catch(e){
+      if(e.code==='auth/invalid-credential'||e.code==='auth/user-not-found'||e.code==='auth/wrong-password')
+        showE('loginError','Utas esveel nuuts ug buruu baina.');
+      else showE('loginError','Aldaa: '+e.message);
+    }
   };
 
-  window.authLogout=function(){
+  window.authLogout = async function(){
+    var cur = JSON.parse(localStorage.getItem('galtyebs_current')||'null');
     localStorage.removeItem('galtyebs_current');
+    if(cur && cur.phone !== 'admin') {
+      try { await signOut(auth); } catch(e) {}
+    }
     updateUI();
   };
 
-  window.saveProfile=async function(){
-    var cur=getCur();if(!cur)return;
+  window.saveProfile = async function(){
+    var cur=JSON.parse(localStorage.getItem('galtyebs_current')||'null');if(!cur)return;
     cur.profession=document.getElementById('pfProfession').value.trim();
     cur.height=document.getElementById('pfHeight').value.trim();
     cur.bio=document.getElementById('pfBio').value.trim();
@@ -2574,11 +2608,11 @@ function updateUI() {
     if(btn){btn.textContent='OK!';btn.style.background='#22c55e';setTimeout(function(){btn.textContent='Save';btn.style.background='#0d1b3e';},2000);}
   };
 
-  window.uploadProfilePic=function(input){
+  window.uploadProfilePic = function(input){
     var file=input.files[0];if(!file)return;
     var reader=new FileReader();
     reader.onload=async function(e){
-      var cur=getCur();if(!cur)return;
+      var cur=JSON.parse(localStorage.getItem('galtyebs_current')||'null');if(!cur)return;
       cur.pic=e.target.result;
       localStorage.setItem('galtyebs_current',JSON.stringify(cur));
       if(cur.phone!=='admin'){try{await updateDoc(doc(db,'users',cur.phone),{pic:cur.pic});}catch(ex){}}
@@ -2587,12 +2621,12 @@ function updateUI() {
     reader.readAsDataURL(file);
   };
 
-  window.openOtherProfile=async function(phone){
+  window.openOtherProfile = async function(phone){
     try{var sn=await getDoc(doc(db,'users',phone));if(sn.exists())_showProfile(sn.data(),false);}catch(e){}
   };
 
-  window.submitPost=async function(){
-    var cur=getCur();if(!cur)return;
+  window.submitPost = async function(){
+    var cur=JSON.parse(localStorage.getItem('galtyebs_current')||'null');if(!cur)return;
     var text=document.getElementById('postText').value.trim();
     if(!text&&_postImgs.length===0)return;
     try{
@@ -2607,14 +2641,14 @@ function updateUI() {
     }catch(e){alert('Aldaa: '+e.message);}
   };
 
-  window.deletePost=async function(id){
-    var cur=getCur();if(!cur)return;
+  window.deletePost = async function(id){
+    var cur=JSON.parse(localStorage.getItem('galtyebs_current')||'null');if(!cur)return;
     if(!confirm('Ustgakh uu?'))return;
     try{await deleteDoc(doc(db,'posts',id));}catch(e){}
   };
 
-  window.toggleLike=async function(postId){
-    var cur=getCur();
+  window.toggleLike = async function(postId){
+    var cur=JSON.parse(localStorage.getItem('galtyebs_current')||'null');
     if(!cur){openAuth();switchTab('register');return;}
     try{
       var ref=doc(db,'posts',postId);
@@ -2626,7 +2660,7 @@ function updateUI() {
   };
 
   function renderPostsData(posts){
-    var cur=getCur();
+    var cur=JSON.parse(localStorage.getItem('galtyebs_current')||'null');
     var feed=document.getElementById('postFeed');if(!feed)return;
     var btn=document.getElementById('postCreateBtn');if(btn)btn.style.display=cur?'':'none';
     var gb=document.getElementById('guestBanner');if(gb)gb.style.display=cur?'none':'block';
@@ -2636,22 +2670,22 @@ function updateUI() {
       var canDel=cur&&(p.phone===cur.phone||isAdmin);
       var isOwn=cur&&p.phone===cur.phone;
       var canView=cur&&!isOwn&&p.phone!=='admin';
-      var avC=isOwn?'onclick="openProfile()"':(canView?'onclick="openOtherProfile(''+p.phone+'')"':'');
+      var avC=isOwn?'onclick="openProfile()"':(canView?'onclick="openOtherProfile(\''+p.phone+'\')"':'');
       var av=p.pic?('<img src="'+p.pic+'" class="post-avatar" '+avC+'>'):('<div class="post-avatar-placeholder" '+avC+'>'+(p.author?p.author[0].toUpperCase():'?')+'</div>');
-      var nC=isOwn?'onclick="openProfile()"':(canView?'onclick="openOtherProfile(''+p.phone+'')"':'');
-      var meta=p.type==='student'?(p.grade+'-r angi, '+p.group+' buleg'):(p.author==='Admin'?'Admin':'Adult');
+      var nC=isOwn?'onclick="openProfile()"':(canView?'onclick="openOtherProfile(\''+p.phone+'\')"':'');
+      var meta=p.type==='student'?(p.grade+'-r angi, '+p.group+' buleg'):(p.author==='Admin'?'Administrator':'Adult');
       var imgs=(p.imgs&&p.imgs.length>0)?('<div class="post-imgs c'+Math.min(p.imgs.length,4)+'">'+p.imgs.slice(0,4).map(function(s){return '<div class="pii"><img src="'+s+'"></div>';}).join('')+'</div>'):'';
       var likes=p.likes||[];
       var isLiked=cur&&likes.indexOf(cur.phone)!==-1;
       var ab='<div class="post-action-bar">'
-        +'<button class="like-btn'+(isLiked?' liked':'')+'" id="likeBtn_'+p._id+'" onclick="toggleLike(''+p._id+'')">'
+        +'<button class="like-btn'+(isLiked?' liked':'')+'" id="likeBtn_'+p._id+'" onclick="toggleLike(\''+p._id+'\')">'
         +'<span class="heart" id="heart_'+p._id+'">?</span>'
         +'<span class="like-count" id="likeCnt_'+p._id+'">'+likes.length+'</span>'
         +'</button></div>';
       return '<div class="post-card">'
         +'<div class="post-header">'+av
         +'<div><div class="post-author" '+nC+'>'+p.author+'</div><div class="post-meta">'+meta+' - '+p.date+'</div></div>'
-        +(canDel?'<button class="post-del-btn" onclick="deletePost(''+p._id+'')">Del</button>':'')
+        +(canDel?'<button class="post-del-btn" onclick="deletePost(\''+p._id+'\')">Del</button>':'')
         +'</div>'
         +(p.text?'<div class="post-text">'+p.text+'</div>':'')
         +imgs+ab+'</div>';
@@ -2664,17 +2698,17 @@ function updateUI() {
     });
   }
 
+  var _postsUnsubscribe = null;
   function listenPosts(){
+    if(_postsUnsubscribe) return;
     var q=query(collection(db,'posts'),orderBy('createdAt','desc'));
-    onSnapshot(q,function(snap){
+    _postsUnsubscribe = onSnapshot(q,function(snap){
       var posts=[];
       snap.forEach(function(d){var data=d.data();data._id=d.id;posts.push(data);});
       renderPostsData(posts);
     });
   }
 
-  listenPosts();
-  updateUI();
 })();
 </script>
 </body>
